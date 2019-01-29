@@ -1,0 +1,13 @@
+.products{
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.product {
+    display: grid;
+    grid-template-columns: 3fr 9fr;
+}
+
+.product img {
+    height: 100px;
+}

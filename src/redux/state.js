@@ -62,11 +62,33 @@ const store = {
                discription: 'Android, экран 5.8" AMOLED (1440x2960), Exynos 8895, ОЗУ 4 ГБ, флэш-память 64 ГБ, карты памяти, камера 12 Мп, аккумулятор 3000 мАч, 2 SIM, цвет черный'
              },
             comments: [
-                "Телефон не работает",
-                "АААААААААААА"
+                { 
+                    id: 1,
+                    text: "Телефон не работает" 
+                 },
+                 { 
+                    id: 2,
+                    text: "Отличный телефон! Пользуюсь с удовольствием" 
+                 },
+                 { 
+                    id: 3,
+                    text: "Отличная покупка! не могу нарадоваться", 
+                 },
+                 { 
+                    id: 4,
+                    text: "ААА супер телефон!!"
+                 },    
             ]
         }
     }
+}
+// debugger
+export const addComment = () => {
+    let newComment = {
+        id: 5,
+        text: "Some text"
+    }
+    store.state.productPage.comments.push(newComment);
 }
 
 export default store;

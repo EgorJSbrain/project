@@ -1,7 +1,8 @@
 import React from 'react';
 
-const Comment = () => {
-    return <div>Я купил этот телефон, а он не работает</div>
+const Comment = (props) => {
+    return <div>{props.text}</div>
+    
 }
-
+// debugger
 export default Comment;

@@ -1,5 +1,5 @@
 const store = {
-    state: {
+    _state: {
         homePage: {
             banner: {
                 imgUrl: "https://i0.wp.com/9to5google.com/wp-content/uploads/sites/4/2019/02/mainbanner_s9_samuel1.jpg?resize=1500%2C0&quality=82&strip=all&ssl=1"
@@ -53,7 +53,16 @@ const store = {
                     title: 'Iphone',
                     shortDescription: 'Apple iOS, экран 5.8" AMOLED (1125x2436), Apple A11 Bionic, ОЗУ 3 ГБ, флэш-память 64 ГБ, камера 12 Мп, аккумулятор 2716 мАч, 1 SIM, цвет темно-серый'
                 }
-            ]
+
+               
+            ],
+            newProduct: {
+                id: 5,
+                img: '',
+                title: '',
+                shortDescription: ''
+            }
+
         },
         productPage: {
            product: {
@@ -80,15 +89,82 @@ const store = {
                  },    
             ]
         }
+    },
+
+
+
+// debugger
+    _refresh() {
+        console.error('Error...')
+    },
+
+    addCommentOnPage(text) {
+        let newComment = {
+            id: 5,
+            text: text
+        }
+        this._state.productPage.comments.push(newComment);
+        this._refresh();
+    },
+
+    addProductOnPage() {
+        let copyOfObj = {...store._state.catalogPage.newProduct};
+        this._state.catalogPage.products.push(copyOfObj);
+
+        this._refresh();
+    },
+    addTitleToNewProduct(string) {
+        this._state.catalogPage.newProduct.title = string;
+        this._refresh();
+    },
+    addImgToNewProduct(string) {
+        this._state.catalogPage.newProduct.img = string;
+        this._refresh();
+    },
+    addDescriptionToNewProduct(string) {
+        this._state.catalogPage.newProduct.shortDescription = string;
+        this._refresh();
+    },
+
+
+    subscriber(callback) {
+        this._refresh = callback;
+    },
+
+    getState() {
+        return this._state; 
+    },
+    dispatch(action){
+        switch (action.type) {
+            case 'ADD_COMMENT':
+                this.addCommentOnPage(action.text);
+                break;
+            
+            case 'ADD_PRODUCT':
+                this.addProductOnPage();
+                break;    
+
+            case 'ADD_TITLE':
+                this.addTitleToNewProduct(action.title);
+                break;
+
+            case 'ADD_IMG':
+                this.addImgToNewProduct(action.img);
+                break;
+
+            case 'ADD_DESCRIPTION':
+                this.addDescriptionToNewProduct(action.shortDescription);
+                break;
+
+            default:
+                alert("BAD ACTION TYPE!")
+                break;
+                
+        }
+        
     }
+
+
 }
 // debugger
-export const addComment = () => {
-    let newComment = {
-        id: 5,
-        text: "Some text"
-    }
-    store.state.productPage.comments.push(newComment);
-}
-
 export default store;

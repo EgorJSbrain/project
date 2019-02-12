@@ -8,10 +8,10 @@ import { Route, NavLink } from 'react-router-dom';
 
 
 const App = ( props ) => {
-    let addCommentOnPage = props.addCommentOnPage;
+    
     // console.log({props})
-    let {homePage, catalogPage, productPage} = props.state.state;
-    // debugger;
+    let {homePage, catalogPage, productPage} = props.state;
+    // debugger
         return (
             <div className={styles.App}>
                 <div>
@@ -19,11 +19,12 @@ const App = ( props ) => {
                     <NavLink to='/catalog' activeClassName={styles.active}><div>Catalog</div></NavLink>
                 </div>
                     <Route exact path='/' render={ () => <HomePage homePage={homePage} />}/>
-                    <Route path='/catalog' render={ () => <CatalogPage catalogPage={catalogPage} />}/>
-                    <Route path='/product' render={ () => <ProductPage productPage={productPage} addCommentOnPage={addCommentOnPage}/>}/>       
+                    <Route path='/catalog' render={ () => 
+                            <CatalogPage catalogPage={catalogPage} 
+                                            dispatch={props.dispatch}/>}/>
+                    <Route path='/product' render={ () => <ProductPage productPage={productPage} dispatch={props.dispatch}/>}/>       
                 </div>
         );
-    
 }
 
 export default App;

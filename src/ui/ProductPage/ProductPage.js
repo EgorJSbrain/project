@@ -5,19 +5,26 @@ import PropTypes from 'prop-types';
 
 
 const ProductPage = (props) => {
-   
-    let addCommentOnPage = props.addCommentOnPage;
+    let { title, imgUrl, discription } = props.productPage.product;
     let comments = props.productPage.comments;
     let commentInput = React.createRef();
+    // let addCommentOnPage = props.addCommentOnPage;
+
+    let ADD_COMMENT = (comment) => {
+        return { type: 'ADD_COMMENT', text: comment };
+    }
+    let onAddCommentClick = () => { 
+        props.dispatch(ADD_COMMENT(commentInput.current.value)); 
+        commentInput.current.value = "";
+    }
     let commentsElements = comments.map((comment) => {
         return (
-                <div key={comments.id}>
-                     <Comment text={comments.text} />
+                <div key={comment.id}>
+                     <Comment text={comment.text} />
                 </div>)
     });
-    let { title, imgUrl, discription } = props.productPage.product;
-    // debugger
     
+    // debugger
     return <div>
         <div className={styles.productCard}>
             <div>
@@ -41,11 +48,8 @@ const ProductPage = (props) => {
             </div>
             <div>
                 <textarea ref={commentInput}></textarea>
-                <br></br>
-                <button type="button" onClick ={ () => { 
-                    addCommentOnPage(commentInput.current.value) 
-                    commentInput.current.value = "";
-                }}>Add comment</button>
+                <br/>
+                <button type="button" onClick ={onAddCommentClick}>Add comment</button>
             </div>
             <div>
                 {commentsElements}

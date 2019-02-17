@@ -2,32 +2,36 @@ import React from 'react';
 import styles from './Catalog.module.css';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { addTitleActionCreater, addUrlImgActionCreater, addShortDescriptionActionCreater, addProductActionCreater } from '../../redux/catalogPageReducer';
 
 
 const CatalogPage = (props) => {
-     //debugger
-    
+     debugger
+    let store = props.store;
     let titleInput = React.createRef();
     let descriptionInput = React.createRef();
-    let imgInput = React.createRef();
+    let imgUrlInput = React.createRef();
    
-    let addTitleToNewProduct = (e) => {
-        props.dispatch({type: 'ADD_TITLE', title: e.currentTarget.value});
+    let addTitleToNewProduct = () => {
+        let title = titleInput.current.value;
+        store.dispatch(addTitleActionCreater(title));
 
     }
 
-    let addImgToNewProduct = (e) => {
-        props.dispatch({type: 'ADD_IMG', img: e.currentTarget.value});
+    let addUrlImgToNewProduct = () => {
+        let urlImg = imgUrlInput.current.value;
+        store.dispatch(addUrlImgActionCreater(urlImg));
     }
 
-    let addDescriptionNewProduct = (e) => {
-        props.dispatch({type: 'ADD_DESCRIPTION', shortDescription: e.currentTarget.value});
+    let addDescriptionNewProduct = () => {
+        let description = descriptionInput.current.value;
+        store.dispatch(addShortDescriptionActionCreater(description));
     }
 
     let onAddProductOnPage = () => { 
-        props.dispatch({type:'ADD_PRODUCT'});
+        store.dispatch(addProductActionCreater());
         titleInput.current.value = '';
-        imgInput.current.value = '';
+        imgUrlInput.current.value = '';
         descriptionInput.current.value = '';
     }
     
@@ -63,8 +67,8 @@ const CatalogPage = (props) => {
                     </div><br/>
 
                     <div>
-                        Url: <input ref={imgInput} 
-                         onChange={(e) => addImgToNewProduct(e)} type="text" />
+                        Url: <input ref={imgUrlInput} 
+                         onChange={(e) => addUrlImgToNewProduct(e)} type="text" />
                     </div><br/>
 
                 <p>Discription: </p>
@@ -74,9 +78,9 @@ const CatalogPage = (props) => {
                     </div><br/>
 
                      <div>
-                         <button onClick={(e) => {
-                            onAddProductOnPage();
-                        }}>Добавить</button>
+                         <button onClick={(e) => onAddProductOnPage()}>
+                            Добавить
+                        </button>
                     </div><br/>
             </div>
         </div>

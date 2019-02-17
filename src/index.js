@@ -4,22 +4,37 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
-import store from './redux/store';
+import { createStore, combineReducers } from 'redux';
+import productPageReducer from './redux/productPageReducer';
+import catalogPageReducer from './redux/catalogPageReducer';
+import homePageReducer from './redux/homePageReducer';
 
 
-let state = store.getState();
 
-const rerenderPage = () => {
+let combinedReducers = combineReducers({
+    productPage: productPageReducer,
+    catalogPage: catalogPageReducer,
+    homePage: homePageReducer,
+});
+
+let store = createStore(combinedReducers);
+
+store.subscribe( () => {
+    let state = store.getState();
+    rerenderPage(state);
+})
+
+const rerenderPage = (state) => {
     ReactDOM.render(
         <BrowserRouter>
-            <App state={state} 
-                 dispatch={store.dispatch.bind(store)}/> 
+            <App state={ state } 
+                 store={ store }/> 
         </BrowserRouter>, document.getElementById('root'));
 };
 // debugger
-rerenderPage();
+rerenderPage(store.getState());
 
-store.subscriber(rerenderPage);
+
 
 
 

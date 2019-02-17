@@ -2,19 +2,20 @@ import React from 'react';
 import Comment from "./Comment";
 import styles from './../../App.module.css';
 import PropTypes from 'prop-types';
+import { addCommentActionCreator } from '../../redux/productPageReducer';
+
 
 
 const ProductPage = (props) => {
+    // debugger
+    let store = props.store;
     let { title, imgUrl, discription } = props.productPage.product;
     let comments = props.productPage.comments;
     let commentInput = React.createRef();
-    // let addCommentOnPage = props.addCommentOnPage;
-
-    let ADD_COMMENT = (comment) => {
-        return { type: 'ADD_COMMENT', text: comment };
-    }
+   
     let onAddCommentClick = () => { 
-        props.dispatch(ADD_COMMENT(commentInput.current.value)); 
+        let comment = commentInput.current.value;
+        store.dispatch(addCommentActionCreator(comment));
         commentInput.current.value = "";
     }
     let commentsElements = comments.map((comment) => {
@@ -23,6 +24,8 @@ const ProductPage = (props) => {
                      <Comment text={comment.text} />
                 </div>)
     });
+
+    
     
     // debugger
     return <div>

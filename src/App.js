@@ -21,8 +21,8 @@ const App = ( props ) => {
                     <Route exact path='/' render={ () => <HomePage homePage={homePage} />}/>
                     <Route path='/catalog' render={ () => 
                             <CatalogPage catalogPage={catalogPage} 
-                                            dispatch={props.dispatch}/>}/>
-                    <Route path='/product' render={ () => <ProductPage productPage={productPage} dispatch={props.dispatch}/>}/>       
+                                         store={props.store}/>}/>
+                    <Route path='/product' render={ () => <ProductPage productPage={productPage} store={props.store}/>}/>       
                 </div>
         );
 }

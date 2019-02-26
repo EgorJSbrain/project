@@ -7,7 +7,6 @@ const HomePage = (props) => {
 let banner = props.homePage.banner;
 let popularProducts = props.homePage.popularProducts;
     // debugger;
-    // { homePage: { banner, popularProducts } }
     let popularProductsMap = popularProducts.map((product) => {
         return (
             <div key={product.id}>

@@ -2,40 +2,35 @@ import React from 'react';
 import styles from './Catalog.module.css';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { addTitleActionCreater, addUrlImgActionCreater, addShortDescriptionActionCreater, addProductActionCreater } from '../../redux/catalogPageReducer';
 
 
-const CatalogPage = (props) => {
-     debugger
-    let store = props.store;
-    let titleInput = React.createRef();
-    let descriptionInput = React.createRef();
-    let imgUrlInput = React.createRef();
+const CatalogPage = ({addTitleToNewProduct, addImgUrlToNewProduct, addShortDescriptionToNewProduct, addProductOnPage, ...props}) => {
+    // debugger
+    // let { products} = {catalogPage};
+    // let titleInput = React.createRef();
+    // let descriptionInput = React.createRef();
+    // let imgUrlInput = React.createRef();
    
-    let addTitleToNewProduct = () => {
-        let title = titleInput.current.value;
-        store.dispatch(addTitleActionCreater(title));
-
+    let onAddTitleToNewProduct = (e) => {
+        // let title = titleInput.current.value;
+            addTitleToNewProduct(e.target.value);
     }
 
-    let addUrlImgToNewProduct = () => {
-        let urlImg = imgUrlInput.current.value;
-        store.dispatch(addUrlImgActionCreater(urlImg));
+    let onAddUrlImgToNewProduct = (e) => {
+            addImgUrlToNewProduct(e.target.value);
     }
 
-    let addDescriptionNewProduct = () => {
-        let description = descriptionInput.current.value;
-        store.dispatch(addShortDescriptionActionCreater(description));
+    let onAddDescriptionNewProduct = (e) => {
+        addShortDescriptionToNewProduct(e.target.value);
     }
 
-    let onAddProductOnPage = () => { 
-        store.dispatch(addProductActionCreater());
-        titleInput.current.value = '';
-        imgUrlInput.current.value = '';
-        descriptionInput.current.value = '';
+    let onAddProductOnPage = (e) => { 
+            addProductOnPage();
+            e.target.value = "";
+            
     }
     
-
+    
     
     let productsMaped = props.catalogPage.products.map((product) => {
         return (
@@ -51,7 +46,6 @@ const CatalogPage = (props) => {
             </div>
         )
     })
-
     return (
         <div>
             <div>
@@ -62,23 +56,23 @@ const CatalogPage = (props) => {
                     </div><br/>
                     
                     <div>
-                        <label>Title: <input ref={titleInput} 
-                            onChange={(e) => addTitleToNewProduct(e)} type="text" /></label>
+                        <label>Title: <input 
+                        value={props.catalogPage.newProduct.title} onChange={(e) => onAddTitleToNewProduct(e)} type="text" /></label>
                     </div><br/>
 
                     <div>
-                        Url: <input ref={imgUrlInput} 
-                         onChange={(e) => addUrlImgToNewProduct(e)} type="text" />
+                        Url: <input 
+                        value={props.catalogPage.newProduct.img} onChange={(e) => onAddUrlImgToNewProduct(e)} type="text" />
                     </div><br/>
 
                 <p>Discription: </p>
                     <div>
-                        <input ref={descriptionInput} 
-                           onChange={(e) => addDescriptionNewProduct(e)} type="text"/>
+                        <input 
+                        value={props.catalogPage.newProduct.shortDescription} onChange={(e) => onAddDescriptionNewProduct(e)} type="text"/>
                     </div><br/>
 
                      <div>
-                         <button onClick={(e) => onAddProductOnPage()}>
+                         <button onClick={(e) => onAddProductOnPage(e)}>
                             Добавить
                         </button>
                     </div><br/>

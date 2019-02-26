@@ -1,30 +1,41 @@
 import React from 'react';
-// import logo from './logo.svg';
 import styles from './App.module.css';
-import ProductPage from "./ui/ProductPage/ProductPage";
-import HomePage from "./ui/HomePage/HomePage";
-import CatalogPage from "./ui/CatalogPage/CatalogPage";
 import { Route, NavLink } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import ProductPageConteiner from './conteiners/ProductPageConteiner';
+import HomePageConteiner from './conteiners/HomePageConteiner';
+import CatalogPageConteiner from './conteiners/CatalogPageConteiner';
+
+
 
 
 const App = ( props ) => {
-    
-    // console.log({props})
-    let {homePage, catalogPage, productPage} = props.state;
-    // debugger
+   
         return (
-            <div className={styles.App}>
-                <div>
-                    <NavLink exact to='/' activeClassName={styles.active}><div>Home</div></NavLink>
-                    <NavLink to='/catalog' activeClassName={styles.active}><div>Catalog</div></NavLink>
-                </div>
-                    <Route exact path='/' render={ () => <HomePage homePage={homePage} />}/>
-                    <Route path='/catalog' render={ () => 
-                            <CatalogPage catalogPage={catalogPage} 
-                                         store={props.store}/>}/>
-                    <Route path='/product' render={ () => <ProductPage productPage={productPage} store={props.store}/>}/>       
-                </div>
+            <BrowserRouter> 
+                <div className={styles.App}>
+                    <div>
+                        <NavLink exact to='/' activeClassName={styles.active}><div>Home</div></NavLink>
+                        <NavLink to='/catalog' activeClassName={styles.active}><div>Catalog</div></NavLink>
+                    </div>
+                        <Route exact path='/' render={ () => <HomePageConteiner />}/>
+                        <Route path='/catalog' render={ () => <CatalogPageConteiner />}/>
+                        <Route path='/product' render={ () => <ProductPageConteiner />}/>       
+                    </div>
+            </BrowserRouter>
         );
+   
 }
 
-export default App;
+
+const mapStateToProps = (state) => {
+    return {
+        state: state
+    }
+};
+// debugger
+
+
+export default connect(mapStateToProps)(App);

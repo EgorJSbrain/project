@@ -2,20 +2,18 @@ import React from 'react';
 import Comment from "./Comment";
 import styles from './../../App.module.css';
 import PropTypes from 'prop-types';
-import { addCommentActionCreator } from '../../redux/productPageReducer';
 
 
 
-const ProductPage = (props) => {
-    // debugger
-    let store = props.store;
-    let { title, imgUrl, discription } = props.productPage.product;
-    let comments = props.productPage.comments;
+const ProductPage = ( { addComment, productPage} ) => {
+    debugger
+    
+    let { title, imgUrl, discription } = productPage.product;
+    let comments = productPage.comments;
     let commentInput = React.createRef();
    
     let onAddCommentClick = () => { 
-        let comment = commentInput.current.value;
-        store.dispatch(addCommentActionCreator(comment));
+        addComment(commentInput.current.value);
         commentInput.current.value = "";
     }
     let commentsElements = comments.map((comment) => {

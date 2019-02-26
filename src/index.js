@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import productPageReducer from './redux/productPageReducer';
 import catalogPageReducer from './redux/catalogPageReducer';
@@ -19,20 +19,16 @@ let combinedReducers = combineReducers({
 
 let store = createStore(combinedReducers);
 
-store.subscribe( () => {
-    let state = store.getState();
-    rerenderPage(state);
-})
-
-const rerenderPage = (state) => {
+const rerenderPage = (store) => {
     ReactDOM.render(
-        <BrowserRouter>
-            <App state={ state } 
-                 store={ store }/> 
-        </BrowserRouter>, document.getElementById('root'));
-};
-// debugger
-rerenderPage(store.getState());
+        <Provider store={ store }>
+                 <App />    
+        </Provider>, 
+             document.getElementById('root'));
+      
+    };
+    // debugger  
+rerenderPage(store);
 
 
 
@@ -42,10 +38,3 @@ rerenderPage(store.getState());
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
-
-
-                            //    addCommentOnPage={ addComment } 
-                            //    addProductOnPage={addProductOnPage}
-                            //    addTitleToNewProduct={addTitleToNewProduct}
-                            //    addImgToNewProduct={addImgToNewProduct}
-                            //    addDescriptionToNewProduct={addDescriptionToNewProduct}

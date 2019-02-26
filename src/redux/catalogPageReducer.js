@@ -29,51 +29,53 @@ let initialState = {
                 title: 'Iphone',
                 shortDescription: 'Apple iOS, экран 5.8" AMOLED (1125x2436), Apple A11 Bionic, ОЗУ 3 ГБ, флэш-память 64 ГБ, камера 12 Мп, аккумулятор 2716 мАч, 1 SIM, цвет темно-серый'
             }
-
-           
         ],
+        
         newProduct: {
             id: 5,
-            urlImg: '',
+            img: '',
             title: '',
             shortDescription: ''
         }
+        
 };
 
 const catalogPageReducer = (state = initialState, action) => {
+    let copyNewState = {...state};
     switch (action.type) {
         case ADD_PRODUCT:
-            {
-                let copyOfObj = {...state.newProduct};
-                state.products.push(copyOfObj);
-                return state;        
-            };
-        break;
-        case ADD_TITLE:
-            {
-                state.newProduct.title = action.title;
-                return state;
-            };
-        break;
-        case ADD_URL_IMG:
-            {
-                state.newProduct.urlImg = action.urlImg;
-                return state;
-            };
-        break;
-        case ADD_DESCRIPTION:
-            {
-                state.newProduct.shortDescription = action.shortDescription;
-                return state;
-            };
+            // debugger
+                let copyNewProduct = {...state.newProduct};
+                let copyState = {...state, products: [...state.products, copyNewProduct]};
+                state.newProduct.title = "";
+                state.newProduct.img = "";
+                state.newProduct.shortDescription = "";
 
+
+                
+                return copyState;        
+            
+        case ADD_TITLE:
+                // let copyStateNewObj = {...state};
+                copyNewState.newProduct.title = action.title;
+                return copyNewState;
+            
+        case ADD_URL_IMG:
+                console.log(copyNewState)
+                copyNewState.newProduct.img = action.urlImg;
+                return copyNewState;
+        
+        case ADD_DESCRIPTION:
+            
+                copyNewState.newProduct.shortDescription = action.shortDescription;
+                return copyNewState;
         default:
             return state;
     }
 };
 
 
-
+// debugger
 
 export const addProductActionCreater = () => {
     return {

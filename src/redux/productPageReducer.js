@@ -1,4 +1,5 @@
-const ADD_COMMENT = 'DM/PRODUCT_PAGE/ADD_COMMENT'
+const ADD_COMMENT = 'DM/PRODUCT_PAGE/ADD_COMMENT';
+// const REMOVE_COMMENT = 'DM/PRODUCT_PAGE/REMOVE_COMMENT'
 let initialState = { 
     product: {
         title: 'Смартфон Samsung Galaxy S8',
@@ -27,6 +28,7 @@ let initialState = {
 
 
 const productPageReducer = (state = initialState, action) => {
+    // debugger;
     switch (action.type) {
         case ADD_COMMENT:
             {
@@ -34,13 +36,22 @@ const productPageReducer = (state = initialState, action) => {
                     id: 5,
                     text: action.text
                 }
-
-                state.comments.push(newComment);
-                return state;
+                // let copyState = {...state};
+                // copyState.comments.push(newComment);
+                
+                return {...state, comments: [...state.comments, newComment]}
+            
             };
-        default:
+        default: 
             return state;
+        
     }
+
+        // case REMOVE_COMMENT: {
+
+        // }
+       
+
 };
 
 export const addCommentActionCreator = (commentText) => {
@@ -49,5 +60,12 @@ export const addCommentActionCreator = (commentText) => {
         text: commentText
     };
 };
+
+// export const removeCommentActionCreator = (commentText) => {
+//     return {
+//         type: REMOVE_COMMENT, 
+//         text: commentText
+//     };
+// };
 
 export default productPageReducer;
